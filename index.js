@@ -19,6 +19,11 @@ const connection = mongoose.connect(uri)
     console.log('Error connecting to Database', error);
 })
 
+app.use(cors({
+    origin: ['https://task-manager-frontend-react-iota.vercel.app/tasks'],
+    credentials: true,
+  }));
+
 const saltRounds =  10;
 
 
