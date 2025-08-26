@@ -20,7 +20,7 @@ const connection = mongoose.connect(uri)
 })
 
 app.use(cors({
-    origin: ['https://task-manager-frontend-react-iota.vercel.app/tasks'],
+    origin: ['http://localhost:5173', 'https://task-manager-frontend-react-livid.vercel.app/signup'],
     credentials: true,
   }));
 
