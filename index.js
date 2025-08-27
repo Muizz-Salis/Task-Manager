@@ -30,7 +30,7 @@ const saltRounds =  10;
 
 const userSchema = new mongoose.Schema({
     username:{type: String, required: true},
-    email:{type: String, required: true},
+    email:{type: String, required: true, unique: true},
     password:{type: String, required: true}
 })
 
@@ -56,6 +56,10 @@ app.post('/signup', async(req, res)=>{
     const { username, email, password } = req.body
     const hashedPassword = await bcrypt.hash(password, saltRounds)
     try {
+        const existingUsers = userModel.find({email})
+        if(existingUsers){
+            res.status(401).json({message: `Email already exists`})
+        }
         const newUser = new userModel({username, email, password: hashedPassword})
         const savedUser = await newUser.save()
         res.status(201).json({message: "Signup succesful", savedUser}) 
