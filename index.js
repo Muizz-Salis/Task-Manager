@@ -56,8 +56,8 @@ app.post('/signup', async(req, res)=>{
     const { username, email, password } = req.body
     const hashedPassword = await bcrypt.hash(password, saltRounds)
     try {
-        const existingUsers = userModel.find({email})
-        if(existingUsers){
+        const existingUser = await userModel.findOne({email})
+        if(existingUser){
             res.status(401).json({message: `Email already exists`})
         }
         const newUser = new userModel({username, email, password: hashedPassword})
